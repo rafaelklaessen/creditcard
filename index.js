@@ -15,10 +15,20 @@ class CreditCard {
   }
 
   /**
+   * Set expiry number.
+   * @param {ExpiryNumber} expiryNumber Expiry number.
+   * @returns {CreditCard} The current CreditCard instance.
+   * @api public
+   */
+  setExpiryNumber(expiryNumber) {
+    this.expiryNumber = expiryNumber;
+  }
+
+  /**
    * Find out which major card scheme issued the card based on the IIN range.
    *
    * @param {String} number Credit card number.
-   * @returns {String|Undefined}
+   * @returns {String|Null}
    * @api public
    */
   getCardScheme() {
@@ -166,7 +176,7 @@ class CreditCard {
    * Parse the credit card information all at once.
    *
    * @param {Boolean} keepFirstSix Keep first six digits of card number.
-   * @returns {Object}
+   * @returns {CreditCardInformation}
    * @api public
    */
   parse(keepFirstSix) {
@@ -175,7 +185,7 @@ class CreditCard {
 
     return new CreditCardInformation({
       iin: number.slice(0, 9),
-      mii: CreditCard.MII[+number.charAt(0)],
+      mii: CreditCard.MII[Number(number.charAt(0))],
       formatted: this.format(),
       cvv:
         scheme === 'American Express'
@@ -194,9 +204,9 @@ class CreditCard {
    * @returns {Boolean}
    * @api public
    */
-  hasValidExpiryNumber() {
+  validateExpiryNumber() {
     if (!this.expiryNumber) return false;
-    return this.expiryNumber.isValid();
+    return this.expiryNumber.validate();
   };
 }
 

@@ -17,9 +17,18 @@ Once you have installed the module you can simply require inside of your Node.js
 application and use it's exported methods.
 
 ```js
-var creditcard = require('creditcard');
+const CreditCard, { ExpiryNumber } = require('creditcard');
 
-creditcard.validate(4111111111111);
+const creditCard = new CreditCard(4111111111111);
+
+creditCard.validate();
+creditCard.parse(); // Returns an instance of CreditCardInformation
+
+new ExpiryNumber({ year: 2019, month: 4 }).validate();
+
+// Or, alternatively
+creditCard.setExpiryNumber(new ExpiryNumber({ year: 2019, month: 4 }));
+creditCard.validateExpiryNumber();
 ```
 
 ## Documentation
@@ -39,7 +48,7 @@ this software and associated documentation files (the "Software"), to deal in
 the Software without restriction, including without limitation the rights to
 use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
 of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions: 
+furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
